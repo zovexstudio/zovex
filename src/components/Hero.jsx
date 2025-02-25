@@ -24,9 +24,13 @@ const Hero = () => {
   };
 
   useEffect(() => {
+    // Hide the loader after 3 seconds, even if videos are not fully loaded
+    const timeout = setTimeout(() => setLoading(false), 3000);
     if (loadedVideos === totalVideos - 1) {
       setLoading(false);
+      clearTimeout(timeout); // If videos load before 3 sec, clear the timeout
     }
+    return () => clearTimeout(timeout);
   }, [loadedVideos]);
 
   const handleMiniVdClick = () => {
